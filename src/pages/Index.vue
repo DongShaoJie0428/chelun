@@ -36,7 +36,7 @@
         <span>实付:</span>
         <i>￥399</i>
       </p>
-      <p style="background:#999999;color:#fff;padding:12px 10px;">立即支付</p>
+      <p style="background:#999999;color:#fff;padding:12px 10px;" @click="changPay">立即支付</p>
     </div>
 
   </div>
@@ -46,6 +46,7 @@
 import Upload from '@/components/Upload';
 import Server from '@/components/server';
 import CityList from '@/components/cityList';
+import { gotoPay,isVip } from "@/api/index"
 
 export default {
   data() {
@@ -80,7 +81,16 @@ export default {
   methods: {
     changeTab(index) {
       this.defaultIndex = index
+    },
+    changPay() {
+      // console.log(0)
+      gotoPay()
     }
+  },
+  mounted() {
+    isVip().then(res=>{
+      console.log("isVip...",res)
+    })
   }
 }
 </script>

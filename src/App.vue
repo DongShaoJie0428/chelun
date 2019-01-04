@@ -11,13 +11,13 @@ export default {
     return {}
   },
   methods: {
-    login(){
-      JSBridge.invoke('app', 'login', {
-        loginCallBackName: (res)=>{
-          console.log('res...', res);
-        }
-      });
-    }
+    // login(){
+    //   JSBridge.invoke('app', 'login', {
+    //     loginCallBackName: (res)=>{
+    //       console.log('res...', res);
+    //     }
+    //   });
+    // }
   }
 }
 </script>

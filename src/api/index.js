@@ -34,6 +34,23 @@ export let uploadImg = (type)=>{
   })
 }
 
+// 唤醒登陆
+export let goLogin = () => {
+  JSBridge.invoke('app', 'login', {
+    loginCallBackName: ()=>window.reload()
+  });
+}
+
+// 唤起支付
+export let gotoPay = () => {
+  JSBridge.invoke('app', 'pay', {
+    price: 398,
+    orderNum: "6486917895967946754",
+    channels:["weixin","alipay","baidu"],
+    callbackUrl:'https://h5.chelun.com/2017/update-licence2/order.html'
+  })
+}
+
 // 获取签发城市
 export let cityList = () => {
   return sendRequest("/api/ExchangeJiaZhao/cityList")
@@ -42,4 +59,9 @@ export let cityList = () => {
 // 获取可补换的签发城市
 export let costList = (...params) => {
   return sendRequest(`/api/ExchangeJiaZhao/getCostList?order_type=${params[0]}&province_id=${params[1]}&city_id=${params[2]}`)
+}
+
+// 获取用户是否是会员
+export let isVip = () => {
+  return sendRequest('https://vip.chelun.com/api/status')
 }

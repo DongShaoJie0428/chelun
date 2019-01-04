@@ -12,6 +12,7 @@
     <van-popup v-model="Cityshow" :overlay="true" position="bottom">
       <van-picker :columns="Citycolumns" show-toolbar ref="cityPicker" @change="cityChange" @cancel="onCancelCity" title="签发城市"  @confirm="onConfirmCity"/>
     </van-popup>
+
   </div>
 </template>
 
@@ -26,7 +27,6 @@ export default {
     }
   },
   created(){
-  //  console.log(getCityList)
    this.getCityList().then(res=>{
       this.Citycolumns = [
         {
@@ -41,7 +41,8 @@ export default {
   computed:{
     ...mapState({
       cityList: state => state.cityPicker.cityList,
-      city: state => state.cityPicker.city
+      city: state => state.cityPicker.city,
+      costList: state => state.cityPicker.costClick
     })
   },
   methods: {
@@ -50,7 +51,8 @@ export default {
       getCostList: 'cityPicker/getCostList'
     }),
     ...mapMutations({
-      updateState:"cityPicker/updateState"
+      updateState:"cityPicker/updateState",
+      upCostState:"cityPicker/upCostState"
     }),
     onConfirmCity(values){
       this.updateState({city:values})
