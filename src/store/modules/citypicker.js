@@ -1,5 +1,4 @@
 import { cityList,costList } from "@/api/index"
-import { Object } from "core-js";
 const state = {
   // 签发城市列表
   cityList: [],
