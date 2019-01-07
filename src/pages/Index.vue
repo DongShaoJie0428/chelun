@@ -29,7 +29,8 @@
     </div>
     <div class="quest">
       <a href="#">常见问题?</a>
-      <img src="../assets/cc-icon.png" alt="">
+      <Quest />
+      <!-- <img src="../assets/cc-icon.png" alt=""> -->
     </div>
     <div class="bottom">
       <p>
@@ -38,7 +39,6 @@
       </p>
       <p style="background:#999999;color:#fff;padding:12px 10px;" @click="changPay">立即支付</p>
     </div>
-
   </div>
 </template>
 
@@ -46,6 +46,7 @@
 import Upload from '@/components/Upload';
 import Server from '@/components/server';
 import CityList from '@/components/cityList';
+import Quest from "@/components/quest"
 import { gotoPay } from "@/api/index"
 
 export default {
@@ -69,7 +70,8 @@ export default {
   components: {
     Upload,
     Server,
-    CityList
+    CityList,
+    Quest
   },
   // 因为beforeCreate还没有初始化完毕，所以直接调用then()
   // beforeCreate(){
@@ -210,13 +212,6 @@ export default {
     text-align: center;
     line-height: 44px;
     color:#64A7D4;
-  }
-  img{
-    width:60px;
-    height:60px;
-    position: absolute;
-    right:10px;
-    top:10px;
   }
 }
 .bottom{

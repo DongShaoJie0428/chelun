@@ -33,7 +33,7 @@ const router = new VueRouter({
     component: IndexPage
   }, {
     path: '*',
-    redirect: '/home'
+    redirect: '/index'
   }]
 })
 
