@@ -6,11 +6,15 @@
     </li>
     <li @click="costClick">
       <span>可补换的签发城市</span>
-      <b>请选择补换地</b>
+      <b>{{cost.join(" ")}}</b>
     </li>
 
     <van-popup v-model="Cityshow" :overlay="true" position="bottom">
       <van-picker :columns="Citycolumns" show-toolbar ref="cityPicker" @change="cityChange" @cancel="onCancelCity" title="签发城市"  @confirm="onConfirmCity"/>
+    </van-popup>
+
+    <van-popup v-model="Costshow" :overlay="true" position="bottom">
+      <van-picker :columns="Costcolumns" show-toolbar ref="costPicker" @cancel="onCancelCost" title="补发城市"  @confirm="onConfirmCost" @change="costChange" />
     </van-popup>
 
   </div>
@@ -23,7 +27,9 @@ export default {
   data() {
     return {
       Cityshow:false,
-      Citycolumns: []
+      Citycolumns: [],
+      Costshow:false,
+      Costcolumns:[]
     }
   },
   created(){
@@ -42,7 +48,8 @@ export default {
     ...mapState({
       cityList: state => state.cityPicker.cityList,
       city: state => state.cityPicker.city,
-      costList: state => state.cityPicker.costClick
+      costList: state => state.cityPicker.costList,
+      cost: state => state.cityPicker.cost
     })
   },
   methods: {
@@ -51,8 +58,7 @@ export default {
       getCostList: 'cityPicker/getCostList'
     }),
     ...mapMutations({
-      updateState:"cityPicker/updateState",
-      upCostState:"cityPicker/upCostState"
+      updateState:"cityPicker/updateState"
     }),
     onConfirmCity(values){
       this.updateState({city:values})
@@ -76,8 +82,32 @@ export default {
       if (!this.city.length){
         alert('请选择签发城市');
       }else{
-        this.getCostList();
+        this.Costshow = true
+        this.getCostList().then(res=>{
+          this.Costcolumns = [
+            {
+              values: this.costList.map(item=>item.name)
+            },
+            {
+              values: this.costList[0].list.map(item=>item.name)
+            }
+          ]
+        });
       }
+    },
+    costChange(picker,values) {
+      // console.log(values)
+      // 获取当前省份的下标
+      let index = this.costList.findIndex(item=>item.name == values[0]);
+      // 调用api更新城市数据
+      this.$refs.costPicker.setColumnValues(1,this.costList[index].list.map(item=>item.name))
+    },
+    onCancelCost(){
+      this.Costshow = false
+    },
+    onConfirmCost(values){
+      this.updateState({cost:values})
+      this.onCancelCost()
     }
   }
 }

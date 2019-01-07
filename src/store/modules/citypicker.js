@@ -5,9 +5,9 @@ const state = {
   // 可补换城市列表
   costList: [],
   // 选择的签发城市
-  city: [],
+  city: ["选择签发城市"],
   // 选择的补换城市
-  cost: []
+  cost: ["选择补发城市"]
 }
 
 const mutations = {
@@ -15,10 +15,6 @@ const mutations = {
   updateState(state,action){
     // console.log(state,action)
     state = Object.assign(state,action)
-  },
-  upCostState(state,action){
-    state = Object.assign(state,action)
-    // console.log(state)
   }
 }
 
@@ -39,7 +35,7 @@ const actions = {
     let proIndex = state.cityList.findIndex(item=>item.name==state.city[0]),
         cityIndex = state.cityList[proIndex].list.findIndex(item=>item.name==state.city[1]);
     let res = await costList(1, state.cityList[proIndex].id, state.cityList[proIndex].list[cityIndex].id);
-    commit("upCostState",{costList:res.data})
+    commit("updateState",{costList:res.data})
     // console.log('res...', res);
   }
 }

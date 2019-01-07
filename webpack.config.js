@@ -82,7 +82,7 @@ module.exports = {
     overlay: true,
     proxy:{
       '/api':{
-        target:"http://chezhu-test.eclicks.cn/",
+        target:"https://chezhu.eclicks.cn/",
         changeOrigin:true,
         pathRewrite:{
           "/api":"/"

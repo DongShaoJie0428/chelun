@@ -34,12 +34,12 @@ export let uploadImg = (type)=>{
   })
 }
 
-// 唤醒登陆
-export let goLogin = () => {
-  JSBridge.invoke('app', 'login', {
-    loginCallBackName: ()=>window.reload()
-  });
-}
+// // 唤醒登陆
+// export let goLogin = () => {
+//   JSBridge.invoke('app', 'login', {
+//     loginCallBackName: ()=>window.reload()
+//   });
+// }
 
 // 唤起支付
 export let gotoPay = () => {
@@ -61,7 +61,7 @@ export let costList = (...params) => {
   return sendRequest(`/api/ExchangeJiaZhao/getCostList?order_type=${params[0]}&province_id=${params[1]}&city_id=${params[2]}`)
 }
 
-// 获取用户是否是会员
-export let isVip = () => {
-  return sendRequest('https://vip.chelun.com/api/status')
-}
+// // 获取用户是否是会员
+// export let isVip = () => {
+//   return sendRequest('https://vip.chelun.com/api/status')
+// }

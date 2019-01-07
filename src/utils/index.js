@@ -1,5 +1,5 @@
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 
-export let getToken = ()=>{
-  return Cookie.get('chelun_acToken') || '';
-}
+// export let getToken = ()=>{
+//   return Cookie.get('chelun_acToken') || '';
+// }

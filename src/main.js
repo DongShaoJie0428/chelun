@@ -9,6 +9,11 @@ import store from '@/store/index'
 // 引入vant 
 import { Popup,Picker } from 'vant';
 
+//引入echarts
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts 
+
 Vue.use(Popup)
 
 Vue.use(Picker)

@@ -46,7 +46,7 @@
 import Upload from '@/components/Upload';
 import Server from '@/components/server';
 import CityList from '@/components/cityList';
-import { gotoPay,isVip } from "@/api/index"
+import { gotoPay } from "@/api/index"
 
 export default {
   data() {
@@ -86,12 +86,12 @@ export default {
       // console.log(0)
       gotoPay()
     }
-  },
-  mounted() {
-    isVip().then(res=>{
-      console.log("isVip...",res)
-    })
   }
+  // mounted() {
+  //   isVip().then(res=>{
+  //     console.log("isVip...",res)
+  //   })
+  // }
 }
 </script>
 <style lang="scss" scoped>
