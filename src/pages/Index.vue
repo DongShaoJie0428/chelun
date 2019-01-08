@@ -24,7 +24,7 @@
       <span>登陆后查看优惠券 &gt;</span>
     </div>
     <div class="quest">
-      <a href="#">常见问题?</a>
+      <router-link to="/questList">常见问题?</router-link>
       <Quest />
       <!-- <img src="../assets/cc-icon.png" alt=""> -->
     </div>
@@ -44,7 +44,7 @@ import Server from '@/components/server';
 import CityList from '@/components/cityList';
 import Quest from "@/components/quest"
 import Header from "@/components/header"
-import { gotoPay } from "@/api/index"
+import { gotoPay,isVip } from "@/api/index"
 
 export default {
   data() {

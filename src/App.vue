@@ -12,11 +12,11 @@ export default {
   },
   methods: {
     login(){
-      JSBridge.invoke('app', 'login', {
+      JSBridge.invoke('app','login',{
         loginCallBackName: (res)=>{
           console.log('res...', res);
         }
-      });
+      })
     }
   }
 }

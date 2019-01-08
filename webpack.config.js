@@ -87,6 +87,13 @@ module.exports = {
         pathRewrite:{
           "/api":"/"
         }
+      },
+      '/api2':{
+        target:"https://vip.chelun.com",
+        changeOrigin:true,
+        pathRewrite:{
+          "/api2":"/"
+        }
       }
     }
   },

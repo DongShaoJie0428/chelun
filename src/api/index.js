@@ -3,7 +3,10 @@ import JSBridge from '@/utils/JSBridge.js';
 // 封装请求的方法
 function sendRequest(url, method = 'GET', data = {}) {
   let params = {
-      method
+      method,
+      headers:{
+        "content-type":"application/json"
+      }
   };
   // 判断如果是一个post请求，带上请求体信息
   if (method == 'POST') {
@@ -66,7 +69,12 @@ export let costList = (...params) => {
   return sendRequest(`/api/ExchangeJiaZhao/getCostList?order_type=${params[0]}&province_id=${params[1]}&city_id=${params[2]}`)
 }
 
-// // 获取用户是否是会员
-// export let isVip = () => {
-//   return sendRequest('https://vip.chelun.com/api/status')
-// }
+// 获取用户是否是会员
+export let isVip = () => {
+  return sendRequest('/api2/api/status')
+}
+
+// 上传base64图片
+export let uploadBase64 = (base64) => {
+  return sendRequest("http://123.206.55.50:11000/upload_base64","POST",{base64})
+}

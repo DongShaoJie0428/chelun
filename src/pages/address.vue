@@ -24,7 +24,15 @@
     <div class="address_money" @click="money">
       <img src="../assets/ee-icon.png" alt="">
     </div>
-    <button @click="share">点击分享</button>
+    <b @click="share">点击分享</b>
+
+    <div>
+      <!-- accept设置为*号会在客户端上出现卡顿，最好是用逗号连接 -->
+      <input type="file" accept="image/png,image/jpg,image/jpeg" @change="uploadFile">上传图片
+    </div>
+
+    <canvas id="canvas" style="width:100%"></canvas>
+
     <div class="mask" v-if="show">
       <div class="mask_pic">
         <img src="../assets/coupon.png" alt="">
@@ -42,7 +50,7 @@
 import Header from "@/components/header"
 import Quest from "@/components/quest"
 import { mapState,mapActions,mapMutations } from "vuex"
-import { goShare } from "@/api/index"
+import { goShare,uploadBase64  } from "@/api/index"
 export default {
   components:{
     Header,
@@ -86,13 +94,50 @@ export default {
         imgUrl:"http://img4.imgtn.bdimg.com/it/u=4211026559,2609260323&fm=26&gp=0.jpg"
       }
       goShare()
+    },
+    uploadFile(e){
+      console.log(e.target.files)
+      let file = e.target.files[0]
+      // 判断图片是否过大
+      if (file.size > 30*1024) {
+        // 转成base64
+        // base64 包括两个 url-loader  file-loader
+        // url-loader可以将图片转为base64字符串，能更快的加载图片，一旦图片过大，
+        // 就需要使用file-loader的加载本地图片，故url-loader可以设置图片超过多少字节时，使用file-loader加载图片。
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = res=>{
+          console.log(res.target.result,"...res")
+          let img = new Image();
+          img.src = res.target.result;
+          img.onload = async () => {
+            // 创建canvas进行压缩
+            let canvas = document.getElementById("canvas");
+            let context = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            // 第一种方法是压缩画布的大小
+            context.drawImage(img,0,0,img.width,img.height,0,0,img.width/2,img.height/2)
+          
+            let base64 = canvas.toDataURL()
+            let res = await uploadBase64(base64)
+            console.log(res,"res...base64")
+
+            // 第二种压缩 压缩图片质量
+            let base65 = canvas.toDataURL("image/png",0.1);
+            let res2 = await uploadBase64(base65);
+            console.log("res2",res)
+          }
+        }
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-button{
+b{
   position: absolute;
   left:0;
   top:300px;

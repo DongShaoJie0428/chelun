@@ -113,7 +113,7 @@ export default {
 
 <style>
 .list_box{
-  width:90%;
+  width:70%;
   height:100%;
   margin:0 auto;
   background: #ccf;
