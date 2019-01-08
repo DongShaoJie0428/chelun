@@ -24,6 +24,7 @@
     <div class="address_money" @click="money">
       <img src="../assets/ee-icon.png" alt="">
     </div>
+    <button @click="share">点击分享</button>
     <div class="mask" v-if="show">
       <div class="mask_pic">
         <img src="../assets/coupon.png" alt="">
@@ -41,6 +42,7 @@
 import Header from "@/components/header"
 import Quest from "@/components/quest"
 import { mapState,mapActions,mapMutations } from "vuex"
+import { goShare } from "@/api/index"
 export default {
   components:{
     Header,
@@ -68,12 +70,35 @@ export default {
     },
     refuse(){
       this.show = !this.show
+    },
+    share(){
+      // 微信朋友圈分享内容
+      window['CHELUN_SHARE_DATA_WXTIMELINE'] = {
+        title:"马上要放学啦！",
+        link:"https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317332&token=&lang=zh_CN",
+        imgUrl:"http://img3.duitang.com/uploads/item/201607/29/20160729112141_Mv83A.jpeg"
+      },
+      // 微信朋友分享
+      window['CHELUN_SHARE_DATA_WXMESSAGE'] = {
+        title:"笨死啦！",
+        desc:"你个大笨蛋",
+        link:"https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317332&token=&lang=zh_CN",
+        imgUrl:"http://img4.imgtn.bdimg.com/it/u=4211026559,2609260323&fm=26&gp=0.jpg"
+      }
+      goShare()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+button{
+  position: absolute;
+  left:0;
+  top:300px;
+  font-size: 14px;
+
+}
 .address_box{
   position: relative;
   width:100%;

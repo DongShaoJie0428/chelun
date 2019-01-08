@@ -51,6 +51,11 @@ export let gotoPay = () => {
   })
 }
 
+// 唤起分享功能
+export let goShare = () => {
+  JSBridge.invoke("ui","shareMessage")
+}
+
 // 获取签发城市
 export let cityList = () => {
   return sendRequest("/api/ExchangeJiaZhao/cityList")
