@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <div class="top">
-      <ul>
-        <li v-for="(list,index) in topList" :key="index" @click="changeTab(index)" :class="[defaultIndex === index ? 'active' : '']">{{list.topTitle}}</li>
-      </ul>
-    </div>
+  <div class="index_box">
+    <Header />
     <div class="pic">
       <img src="../assets/1.jpg" alt="">
     </div>
@@ -37,7 +33,7 @@
         <span>实付:</span>
         <i>￥399</i>
       </p>
-      <p style="background:#999999;color:#fff;padding:12px 10px;" @click="changPay">立即支付</p>
+      <router-link to="/address"><p style="background:#999999;color:#fff;padding:12px 10px;" @click="changPay">立即支付</p></router-link>
     </div>
   </div>
 </template>
@@ -47,31 +43,21 @@ import Upload from '@/components/Upload';
 import Server from '@/components/server';
 import CityList from '@/components/cityList';
 import Quest from "@/components/quest"
+import Header from "@/components/header"
 import { gotoPay } from "@/api/index"
 
 export default {
   data() {
     return{
-      defaultIndex:0,
-      show:false,
-      topList: [
-        {
-          topTitle:"订单提交"
-        }, {
-          topTitle:"填写收货地址"
-        }, {
-          topTitle:"正在办理"
-        }, {
-          topTitle:"办理完成"
-        }
-      ]
+      show:false
     }
   },
   components: {
     Upload,
     Server,
     CityList,
-    Quest
+    Quest,
+    Header
   },
   // 因为beforeCreate还没有初始化完毕，所以直接调用then()
   // beforeCreate(){
@@ -81,9 +67,6 @@ export default {
   // },
 
   methods: {
-    changeTab(index) {
-      this.defaultIndex = index
-    },
     changPay() {
       // console.log(0)
       gotoPay()
@@ -108,28 +91,9 @@ export default {
   box-sizing: border-box;
   font-size:14px;
 }
-.active{
-  color:#fff;
-  background:url("../assets/4.jpg") no-repeat;
-  background-size: 100% 100%;
-}
-.top{
+.index_box{
   width:100%;
-  height:44px;
-  color:#3BAFFC;
-  ul{
-    width:100%;
-    height:44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    li{
-      height:44px;
-      text-align: center;
-      line-height: 44px;
-      padding:0 10px;
-    }
-  }
+  height:100%;
 }
 .pic{
   width:100%;

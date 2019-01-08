@@ -1,6 +1,6 @@
 <template>
     <div class="pic">
-      <img src="../assets/cc-icon.png" alt="" @click="showModel">
+      <img src="../assets/cc-icon.png" alt="">
     </div>
 </template>
 
@@ -17,8 +17,8 @@ export default {
 <style lang="scss" scoped>
 
 .pic{
-  width:60px;
-  height:60px;
+  width:0;
+  height:0;
   img{
     position: fixed;
     right:20px;

@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { getToken } from "@/utils/index"
-import { goLogin } from "@/api/index"
 
 Vue.use(VueRouter);
 
@@ -11,6 +9,7 @@ import Home from '@/pages/home';
 import Comment from '@/pages/comment';
 import List from '@/pages/list';
 import Presentation from '@/pages/presentation';
+import Address from '@/pages/address';
 
 const router = new VueRouter({
   routes: [{
@@ -31,6 +30,9 @@ const router = new VueRouter({
   },{
     path: '/index',
     component: IndexPage
+  },{
+    path:'/address',
+    component:Address
   }, {
     path: '*',
     redirect: '/index'
