@@ -1,46 +1,84 @@
 <template>
-  <div>
-    <canvas ref="canvas"></canvas>
-    <canvas ref="canvasone"></canvas>
-  </div>
+  <canvas ref="canvas"></canvas>
 </template>
+
 <script>
-import Bg from "../assets/bg.jpg"
+import Bg from "@/assets/bg.jpg"
+import { imgTobase64,uploadBase64 } from "@/api/index"
 export default {
   computed:{
     canvas(){
       return this.$refs.canvas
     },
-    canvasOne(){
-      return this.$refs.canvasone
-    },
     context(){
       return this.$refs.canvas.getContext("2d")
-      return this.$refs.canvasone.getContext("2d")
     }
   },
-  mounted(){
-    let img = new Image()
-    let img1 = new Image()
-    img.src = Bg;
-    img1.src = "https://avatars1.githubusercontent.com/u/42017463?s=460&v=4"
-    img.onload = () => {
-      this.canvas.width = img.width
-      this.canvas.height = img.height
-      this.context.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height)
-      this.context.drawImage(img1, 0, 0, img1.width, img1.height, 110, 760, img1.width/5.5, img1.height/5.5)
-
-      this.context.font = '30px 宋体';
-      this.context.fillText("匣与枯", 105,880);
-      this.context.textAlign = 'center';
-      this.context.textBaseline = 'top';
+  methods:{
+    async loadImg(src){
+      return new Promise((resolve,reject) => {
+        let img = new Image();
+        img.src = src;
+        img.onload = () => {
+          resolve(img)
+        }
+        img.onerror = () => {
+          reject()
+        }
+      })
     }
+  },
+  async mounted(){
+    // 解构赋值
+    let { canvas,context } = this
+    let img = await this.loadImg(Bg)
+    // 设置画布的大小
+    canvas.width = img.width
+    canvas.height = img.height
+    // 绘制背景
+    context.drawImage(img,0,0,img.width,img.height,0,0,img.width,img.height)
+
+    // 绘制头像
+    const avatarUrl = "https://avatars1.githubusercontent.com/u/42017463?s=460&v=4"
+    const response = await imgTobase64(avatarUrl)
+    console.log(response,"...response")
+    let avatar = await this.loadImg(response.data.base64)
+
+    // 绘制圆形头像
+    context.save()  // canvas.save()用来保存先前状态的 
+    context.arc(140,792,43,0,360)
+    // 截取圆形
+    context.clip()
+    context.drawImage(avatar,0,0,avatar.width,avatar.height,97,749,86,86)
+  
+    // 绘制圆形边框
+    context.beginPath()
+    context.lineWidth = 8
+    context.strokeStyle = "#8db287"
+    context.arc(140,792,43,0,360,false)
+    context.stroke()
+    context.closePath()
+
+    // 绘制姓名
+    context.restore()  // canvas.restore()用来恢复之前保存的状态
+    context.font = "26px 幼圆"
+    context.fillStyle = "#1b540d"
+    // 在画布上输出文本之前，检查字体的宽度
+    let text = context.measureText("孙成旭")
+    context.fillText("孙成旭",140-text.width/2,860)
+
+    // 生成图片
+    // 生成图片必须转化为base64 否则会报错为画布被污染
+    // Uncaught (in promise) DOMException: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported
+    let base64 = canvas.toDataURL("image/jpeg")
+    let upload = await uploadBase64(base64)
+    console.log(upload,"...upload")
   }
 }
 </script>
-<style lang="scss">
+
+<style>
 canvas{
   width:100%;
 }
-
 </style>
