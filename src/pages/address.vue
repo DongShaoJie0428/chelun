@@ -96,7 +96,7 @@ export default {
       goShare()
     },
     uploadFile(e){
-      console.log(e.target.files)
+      console.log(e.target.files,"...e")
       let file = e.target.files[0]
       // 判断图片是否过大
       if (file.size > 30*1024) {

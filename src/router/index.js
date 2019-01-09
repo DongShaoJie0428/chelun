@@ -12,6 +12,7 @@ Vue.use(VueRouter);
 // 这种写法作用是 按需加载，意思就是打开那个页面加载那个页面
 const IndexPage = () => import('@/pages/Index')
 const Home = () => import('@/pages/home')
+const Canvas = () => import('@/pages/canvas')
 
 import Comment from '@/pages/comment';
 import List from '@/pages/list';
@@ -45,8 +46,11 @@ const router = new VueRouter({
     path:'/questList',
     component:QuestList
   }, {
+    path:'/canvas',
+    component:Canvas
+  }, {
     path: '*',
-    redirect: '/index'
+    redirect: '/canvas'
   }]
 })
 
